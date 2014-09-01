@@ -1,0 +1,24 @@
+<!--
+
+    THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
+    FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
+
+-->
+<synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.xebialabs.com/deployit/synthetic"
+           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+
+    <type-modification type="udm.BaseContainer">
+        <property name="allowConcurrentDeployments" kind="boolean" required="false" default="true" category="Locking" description="If set, multiple deployments at the same time can be executed, and a 'collision avoidance' check will not be executed" />
+    </type-modification>
+    
+    
+    <type-modification type="udm.Environment">
+        <property name="allowConcurrentDeployments" kind="boolean" required="false" default="true" category="Locking" description="If set, multiple deployments at the same time can be executed, and a 'collision avoidance' check will not be executed" />
+    </type-modification>
+    
+    <type-modification type="udm.DeployedApplication">
+        <property name="allowConcurrentDeployments" kind="boolean" required="false" default="true" category="Locking" description="If set, multiple deployments at the same time can be executed, and a 'collision avoidance' check will not be executed" />
+    </type-modification>
+</synthetic>
