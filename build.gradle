@@ -38,7 +38,7 @@ configurations {
 }
 
 version = '4.0.1'
-apiVersion = '4.0.1'
+def apiVersion = '4.0.1'
 
 dependencies {
 	compile "com.xebialabs.deployit:udm-plugin-api:$apiVersion"
