@@ -2,11 +2,11 @@
 
 This document describes the functionality provided by the Lock plugin.
 
-See the **Deployit Reference Manual** for background information on Deployit and deployment concepts.
+See the **XL Deploy Reference Manual** for background information on XL Deploy and deployment concepts.
 
 ## Overview
 
-The Lock plugin is a Deployit plugin that adds capabilities for preventing simultaneous deployments.
+The Lock plugin is a XL Deploy plugin that adds capabilities for preventing simultaneous deployments.
 
 ###Features
 
@@ -17,9 +17,9 @@ The Lock plugin is a Deployit plugin that adds capabilities for preventing simul
 
 ## Requirements
 
-* **Deployit requirements**
-	* **Deployit**: version 3.8+
-	* **Other Deployit Plugins**: None
+* **XL Deploy requirements**
+	* **XL Deploy**: version 4.0+
+	* **Other XL Deploy Plugins**: None
 
 ## Installation
 
@@ -36,7 +36,7 @@ manual intervention. When the deployment finishes (either successfully or is abo
 
 ## Configuration
 
-The locks plugin adds synthetic properties to specific CIs in Deployit that are used to control locking behavior. The following CIs can be locked:
+The locks plugin adds synthetic properties to specific CIs in XL Deploy that are used to control locking behavior. The following CIs can be locked:
 
 * *udm.DeployedApplication*: this ensures that only one depoyment of a particular application to an environment can be in progress at once
 * *udm.Environment*: this ensures that only one depoyment to a particular environment can be in progress at once
@@ -48,4 +48,4 @@ Each of the above CIs has the following synthetic property added:
 
 ## Implementation
 
-Each lock is stored as a file in a directory under the Deployit installation directory. The _lock.Manager_ CI can be created in the _Infrastructure_ section of Deployit to list and clear all of the current locks.
+Each lock is stored as a file in a directory under the XL Deploy installation directory. The _lock.Manager_ CI can be created in the _Infrastructure_ section of XL Deploy to list and clear all of the current locks.
