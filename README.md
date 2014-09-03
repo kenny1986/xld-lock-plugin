@@ -25,6 +25,14 @@ The Lock plugin is a XL Deploy plugin that adds capabilities for preventing simu
 
 Place the plugin JAR file into your `SERVER_HOME/plugins` directory. 
 
+## Build it
+
+Following options are available:
+
+* *gradle clean assemble*: Will generate a jar that can be installed.
+* *gradle clean test*: Will execute the unit tests (if any)
+* *gradle clean itest*: Will execute the integration tests (XLDEPLOY_HOME environment variable to be set). For example: *XLDEPLOY_HOME=/opt/xldeploy/xl-deploy-4.0.1/xl-deploy-4.0.1-server*
+
 ## Locking deployments
 
 When a deployment is configured, the Lock plugin examines the CIs involved in the deployment to determine whether any of them must be locked for exclusive use. If so,

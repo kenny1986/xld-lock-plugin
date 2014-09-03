@@ -18,6 +18,9 @@ apply plugin: 'maven'
 group = 'com.xebialabs.deployit.community'
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
+version = '4.0.1'
+def apiVersion = '4.0.1'
+xldeployHome = "$System.env.XLDEPLOY_HOME"
 
 repositories {
 	mavenLocal()
@@ -35,10 +38,9 @@ configurations {
 	compile {
 		transitive = false
 	}
+	itestCompile { extendsFrom testCompile }
+    itestRuntime { extendsFrom itestCompile, testRuntime }
 }
-
-version = '4.0.1'
-def apiVersion = '4.0.1'
 
 dependencies {
 	compile "com.xebialabs.deployit:udm-plugin-api:$apiVersion"
@@ -49,6 +51,18 @@ dependencies {
     testCompile "org.hamcrest:hamcrest-library:1.2.1"
 	testCompile "com.google.guava:guava:10.0.1"
 	testCompile "junit:junit-dep:4.10"
+	itestCompile fileTree(dir: "$xldeployHome/lib", include: ['*.jar'])
+}
+
+sourceSets {
+        itest {
+            java {
+                srcDirs = ['src/test/itest']
+            }
+            classesDir = itest.output.classesDir
+            compileClasspath = sourceSets.main.output + configurations.testCompile + configurations.itestCompile
+            runtimeClasspath = sourceSets.itest.output + configurations.itestCompile + sourceSets.main.output + configurations.itestRuntime
+        }
 }
 
 import org.apache.tools.ant.filters.*
@@ -78,4 +92,14 @@ license {
     header rootProject.file('src/main/license/xebialabs_community.license')
     strictCheck true
 }
+
+task itest(dependsOn: 'itestClasses',type: Test) {
+        testClassesDir = sourceSets.itest.classesDir
+        classpath = sourceSets.itest.runtimeClasspath
+}  
+
+itest.configure {
+        useJUnit() {
+        }
+}   
 
