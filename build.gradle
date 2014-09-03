@@ -59,7 +59,6 @@ sourceSets {
             java {
                 srcDirs = ['src/test/itest']
             }
-            classesDir = sourceSets.itest.output.classesDir
             compileClasspath = sourceSets.main.output + configurations.testCompile + configurations.itestCompile
             runtimeClasspath = sourceSets.itest.output + configurations.itestCompile + sourceSets.main.output + configurations.itestRuntime
         }
@@ -94,7 +93,7 @@ license {
 }
 
 task itest(dependsOn: 'itestClasses',type: Test) {
-        testClassesDir = sourceSets.itest.classesDir
+        testClassesDir = sourceSets.itest.output.classesDir
         classpath = sourceSets.itest.runtimeClasspath
 }  
 
