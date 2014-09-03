@@ -59,7 +59,7 @@ sourceSets {
             java {
                 srcDirs = ['src/test/itest']
             }
-            classesDir = main.output.classesDir
+            classesDir = sourceSets.itest.output.classesDir
             compileClasspath = sourceSets.main.output + configurations.testCompile + configurations.itestCompile
             runtimeClasspath = sourceSets.itest.output + configurations.itestCompile + sourceSets.main.output + configurations.itestRuntime
         }
