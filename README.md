@@ -1,12 +1,12 @@
-# Lock plugin #
+# XLD Lock plugin #
 
-This document describes the functionality provided by the Lock plugin.
+This document describes the functionality provided by the XLD Lock plugin.
 
 See the **XL Deploy Reference Manual** for background information on XL Deploy and deployment concepts.
 
 ## Overview
 
-The Lock plugin is a XL Deploy plugin that adds capabilities for preventing simultaneous deployments.
+The XLD Lock plugin is a XL Deploy plugin that adds capabilities for preventing simultaneous deployments.
 
 ###Features
 
