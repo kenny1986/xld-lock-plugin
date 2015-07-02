@@ -31,12 +31,9 @@ import com.xebialabs.deployit.plugin.api.udm.Environment;
  */
 public class DeploymentLockContributor {
 	private static final String CONCURRENT_DEPLOYMENTS_ALLOWED_PROPERTY = "allowConcurrentDeployments";
-	
-	public DeploymentLockContributor() {
-	}
 
 	@Contributor
-	public void addDeploymentLockCheckStep(Deltas deltas, DeploymentPlanningContext ctx) {
+	public static void addDeploymentLockCheckStep(Deltas deltas, DeploymentPlanningContext ctx) {
 		DeployedApplication deployedApplication = ctx.getDeployedApplication();
 		Environment environment = deployedApplication.getEnvironment();
 
@@ -62,12 +59,12 @@ public class DeploymentLockContributor {
 		}
 	}
 
-	private boolean shouldLockCI(ConfigurationItem ci) {
+	private static boolean shouldLockCI(ConfigurationItem ci) {
 		return ci.hasProperty(CONCURRENT_DEPLOYMENTS_ALLOWED_PROPERTY) &&
 				FALSE.equals(ci.getProperty(CONCURRENT_DEPLOYMENTS_ALLOWED_PROPERTY));
 	}
 
-	private Set<Container> getContainersRequiringCheck(Deltas deltas) {
+	private static Set<Container> getContainersRequiringCheck(Deltas deltas) {
 		Iterable<Container> containersInAction = transform(deltas.getDeltas(), new Function<Delta, Container>() {
 			@Override
 			public Container apply(Delta input) {

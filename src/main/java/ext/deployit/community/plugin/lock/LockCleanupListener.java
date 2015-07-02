@@ -15,6 +15,7 @@ import static com.xebialabs.deployit.engine.api.execution.TaskExecutionState.*;
 import com.xebialabs.deployit.plugin.api.udm.ConfigurationItem;
 
 public class LockCleanupListener implements ExecutionStateListener, Serializable {
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(LockCleanupListener.class);
 
 	private final LockHelper lockHelper;
 	private final Set<ConfigurationItem> cisToBeUnlocked;
@@ -26,12 +27,13 @@ public class LockCleanupListener implements ExecutionStateListener, Serializable
 	
 	@Override
 	public void stepStateChanged(StepExecutionStateEvent event) {
-		System.out.println("step event: " + event);
+
+		logger.info("Step event: {}", event);
 	}
 
 	@Override
 	public void taskStateChanged(TaskExecutionStateEvent event) {
-		System.out.println("task event: " + event);
+		logger.info("Task event: {}", event);
 
 		switch(event.currentState()) {
 			case CANCELLED:
