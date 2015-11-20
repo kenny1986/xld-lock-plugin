@@ -16,18 +16,36 @@ public class AcquireAllLocksStep implements Step {
 
 	private static final int ACQUIRE_LOCKS_ORDER = 2;
 	private final Set<ConfigurationItem> cisToBeLocked;
+	private boolean enableRetry;
+	private int retryInSeconds;
+	private int retryLimit;
 	private final LockHelper lockHelper;
 
-	public AcquireAllLocksStep(LockHelper lockHelper, Set<ConfigurationItem> cisToBeLocked) {
+	public AcquireAllLocksStep(LockHelper lockHelper, Set<ConfigurationItem> cisToBeLocked, boolean enableRetry, int retryInSeconds, int retryLimit) {
 		this.lockHelper = lockHelper;
 		this.cisToBeLocked = cisToBeLocked;
+		this.enableRetry = enableRetry;
+		this.retryInSeconds = retryInSeconds;
+		this.retryLimit = retryLimit;
 	}
 
 	@Override
 	public StepExitCode execute(ExecutionContext context) throws Exception {
 		context.logOutput("Attempting to acquire locks on CIs " + cisToBeLocked);
-		
-		if (lockHelper.atomicallyLock(cisToBeLocked)) {
+
+
+		boolean locked = lockHelper.atomicallyLock(cisToBeLocked);
+		if (!locked && enableRetry) {
+			int retryCount = 0;
+			while(!locked && retryCount < retryLimit ) {
+				context.logOutput("Will retry in "+ retryInSeconds +" seconds");
+				Thread.sleep(retryInSeconds*1000);
+				context.logOutput("Attempting to acquire locks on CIs " + cisToBeLocked);
+				locked = lockHelper.atomicallyLock(cisToBeLocked);
+				retryCount++;
+			}
+		}
+		if (locked) {
 			context.logOutput("All locks acquired");
 			context.setAttribute("lockCleanupListener", new LockCleanupListener(lockHelper, cisToBeLocked));
 			return StepExitCode.SUCCESS;

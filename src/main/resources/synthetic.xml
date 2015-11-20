@@ -16,6 +16,10 @@
     
     <type-modification type="udm.Environment">
         <property name="allowConcurrentDeployments" kind="boolean" required="false" default="true" category="Locking" description="If set, multiple deployments at the same time can be executed, and a 'collision avoidance' check will not be executed" />
+        <property name="lockAllContainersInEnvironment" kind="boolean" required="false" default="false" category="Locking" description="If set, will lock all container in environment" />
+        <property name="enableLockRetry" kind="boolean" required="false" default="false" category="Locking" description="If set, will continually try to obtain lock" />
+        <property name="lockRetryInterval" kind="integer" default="30" category="Locking" description="Seconds to wait before retrying to obtain lock" />
+        <property name="lockRetryAttempts" kind="integer" default="60" category="Locking" description="Number of retry attempts." />
     </type-modification>
     
     <type-modification type="udm.DeployedApplication">

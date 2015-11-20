@@ -14,6 +14,7 @@ The XLD Lock plugin is a XL Deploy plugin that adds capabilities for preventing 
 * Lock a complete environment for exclusive use by one deployment
 * Lock specific containers for exclusive use by one deployment
 * List and clear locks using a lock manager CI
+* Wait for lock
 
 ## Requirements
 
@@ -37,7 +38,7 @@ Following options are available:
 
 When a deployment is configured, the Lock plugin examines the CIs involved in the deployment to determine whether any of them must be locked for exclusive use. If so,
 it contributes a step to the beginning of the deployment plan to acquire the required locks. If the necessary locks can't be obtained, the deployment will enter a PAUSE 
-state and can be continued at a later time.
+state and can be continued at a later time. If the enviroment to which the deployment is taking place has its __enableLockRetry__ property set, then the step will wait for a period of time before retrying to acquire the lock.
 
 If lock acquisition is successful, the deployment will continue to execute. During a deployment, the locks are retained, even if the deployment fails and requires 
 manual intervention. When the deployment finishes (either successfully or is aborted), the locks will be released.
@@ -53,6 +54,13 @@ The locks plugin adds synthetic properties to specific CIs in XL Deploy that are
 Each of the above CIs has the following synthetic property added:
 
 * *allowConcurrentDeployments* (default: true): indicates whether concurrent deployments are allowed. If false, the Lock plugin will lock the CI prior to a deployment.
+
+The __udm.Environment__ has the following additional synthetic properties :
+
+* *lockAllContainersInEnvironment* (default: false) If set, will lock all containers in environment instead of only the enviroment
+* *enableLockRetry* (default: false): If set, will not PAUSE the deployment on failure to acquire locks. Instead continually tries to obtain the lock after a period of time.
+* *lockRetryInterval* (default: 30): Seconds to wait before retrying to obtain lock.
+* *lockRetryAttempts* (default: 60): Number of retry attempts. On failure to obtain locks after the designated attempts, the deployment will be PAUSED.
 
 ## Implementation
 

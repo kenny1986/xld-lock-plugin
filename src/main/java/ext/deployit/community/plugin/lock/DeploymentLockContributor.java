@@ -50,12 +50,21 @@ public class DeploymentLockContributor {
 		
 		if (shouldLockCI(environment)) {
 			cisToBeLocked.add(environment);
+			boolean lockAllContainersInEnvironment = environment.getProperty("lockAllContainersInEnvironment");
+			if (lockAllContainersInEnvironment) {
+				for (Container container : environment.getMembers()) {
+					cisToBeLocked.add(container);
+				}
+			}
 		}
 
 		cisToBeLocked.addAll(getContainersRequiringCheck(deltas));
 		
 		if (!cisToBeLocked.isEmpty()) {
-			ctx.addStep(new AcquireAllLocksStep(new LockHelper(), cisToBeLocked));
+			boolean enableLockRetry = environment.getProperty("enableLockRetry");
+			int lockRetryInterval = environment.getProperty("lockRetryInterval");
+			int lockRetryAttempts = environment.getProperty("lockRetryAttempts");
+			ctx.addStep(new AcquireAllLocksStep(new LockHelper(), cisToBeLocked, enableLockRetry, lockRetryInterval, lockRetryAttempts));
 		}
 	}
 

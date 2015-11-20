@@ -36,9 +36,12 @@ public class LockHelper implements Serializable {
 			try {
 				if (lock(ci)) {
 					acquiredLocks.add(ci);
+				} else {
+					break;
 				}
 			} catch(Exception e) {
 				// failed to acquire one lock, will clean up later
+				break;
 			}
 		}
 		
