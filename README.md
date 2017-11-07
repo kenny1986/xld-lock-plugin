@@ -1,8 +1,20 @@
-# XLD Lock plugin #
+# XLD Lock plugin
+
+[![Build Status][xld-lock-plugin-travis-image]][xld-lock-plugin-travis-url]
+[![License: MIT][xld-lock-plugin-license-image]][xld-lock-plugin-license-url]
+![Github All Releases][xld-lock-plugin-downloads-image]
+
+[xld-lock-plugin-travis-image]: https://travis-ci.org/xebialabs-community/xld-lock-plugin.svg?branch=master
+[xld-lock-plugin-travis-url]: https://travis-ci.org/xebialabs-community/xld-lock-plugin
+[xld-lock-plugin-license-image]: https://img.shields.io/badge/License-MIT-yellow.svg
+[xld-lock-plugin-license-url]: https://opensource.org/licenses/MIT
+[xld-lock-plugin-downloads-image]: https://img.shields.io/github/downloads/xebialabs-community/xld-lock-plugin/total.svg
+
+## Preface
 
 This document describes the functionality provided by the XLD Lock plugin.
 
-See the **XL Deploy Reference Manual** for background information on XL Deploy and deployment concepts.
+See the [XL Deploy reference manual](https://docs.xebialabs.com/xl-deploy) for background information on XL Deploy and deployment concepts.
 
 ## Overview
 
@@ -24,17 +36,20 @@ The XLD Lock plugin is a XL Deploy plugin that adds capabilities for preventing 
 
 ## Installation
 
-Place the plugin JAR file into your `SERVER_HOME/plugins` directory. 
+* Place the plugin JAR file into your `SERVER_HOME/plugins` directory. 
+* Restart the XL Deploy server.
 
-## Build it
+### Build it
 
 Following options are available:
 
 * *gradle clean assemble*: Will generate a jar that can be installed.
 * *gradle clean test*: Will execute the unit tests (if any)
-* *gradle clean itest*: Will execute the integration tests (XLDEPLOY_HOME environment variable to be set). For example: *XLDEPLOY_HOME=/opt/xldeploy/xl-deploy-4.0.1/xl-deploy-4.0.1-server*
+* *gradle clean itest*: Will execute the integration tests (`XLDEPLOY_HOME` environment variable to be set). For example: `XLDEPLOY_HOME=/opt/xldeploy/xl-deploy-4.0.1/xl-deploy-4.0.1-server`
 
-## Locking deployments
+## Usage
+
+### Locking deployments
 
 When a deployment is configured, the Lock plugin examines the CIs involved in the deployment to determine whether any of them must be locked for exclusive use. If so,
 it contributes a step to the beginning of the deployment plan to acquire the required locks. If the necessary locks can't be obtained, the deployment will enter a PAUSE 
@@ -43,7 +58,7 @@ state and can be continued at a later time. If the enviroment to which the deplo
 If lock acquisition is successful, the deployment will continue to execute. During a deployment, the locks are retained, even if the deployment fails and requires 
 manual intervention. When the deployment finishes (either successfully or is aborted), the locks will be released.
 
-## Configuration
+### Configuration
 
 The locks plugin adds synthetic properties to specific CIs in XL Deploy that are used to control locking behavior. The following CIs can be locked:
 
@@ -62,6 +77,6 @@ The __udm.Environment__ has the following additional synthetic properties :
 * *lockRetryInterval* (default: 30): Seconds to wait before retrying to obtain lock.
 * *lockRetryAttempts* (default: 60): Number of retry attempts. On failure to obtain locks after the designated attempts, the deployment will be PAUSED.
 
-## Implementation
+### Implementation
 
 Each lock is stored as a file in a directory under the XL Deploy installation directory. The _lock.Manager_ CI can be created in the _Infrastructure_ section of XL Deploy to list and clear all of the current locks.
