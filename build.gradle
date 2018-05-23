@@ -39,7 +39,7 @@ processResources.configure {
 group = 'com.xebialabs.deployit.community'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-def apiVersion = '2018.3.5'
+def apiVersion = '2018.1.0'
 def xldeployHome = "$System.env.XLDEPLOY_HOME"
 
 repositories {
@@ -61,8 +61,8 @@ configurations {
 dependencies {
   compile "com.xebialabs.deployit:udm-plugin-api:$apiVersion"
   compile "com.xebialabs.deployit:engine-spi:$apiVersion"
-  compile "com.xebialabs.deployit:engine-api:$apiVersion"
-  compile "com.google.guava:guava:10.0.1"
+  // compile "com.xebialabs.deployit:engine-api:$apiVersion"
+  // compile "com.google.guava:guava:10.0.1"
   compile "org.slf4j:slf4j-api:1.7.12"
   testCompile "org.hamcrest:hamcrest-core:1.2.1"
   testCompile "org.hamcrest:hamcrest-library:1.2.1"
