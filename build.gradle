@@ -39,7 +39,7 @@ processResources.configure {
 group = 'com.xebialabs.deployit.community'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-def apiVersion = '2015.2.1'
+def apiVersion = '2018.3.5'
 def xldeployHome = "$System.env.XLDEPLOY_HOME"
 
 repositories {
