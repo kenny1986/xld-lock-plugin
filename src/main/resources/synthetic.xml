@@ -17,6 +17,10 @@
         <property name="allowConcurrentDeployments" kind="boolean" required="false" default="true" category="Locking" description="If set, multiple deployments at the same time can be executed, and a 'collision avoidance' check will not be executed" />
     </type-modification>
     
+    <type-modification type="udm.BaseDeployedContainer">
+        <property name="allowConcurrentDeployments" kind="boolean" required="false" default="true" category="Locking" description="If set, multiple deployments at the same time can be executed, and a 'collision avoidance' check will not be executed" />
+    </type-modification>
+   
     
     <type-modification type="udm.Environment">
         <property name="allowConcurrentDeployments" kind="boolean" required="false" default="true" category="Locking" description="If set, multiple deployments at the same time can be executed, and a 'collision avoidance' check will not be executed" />
